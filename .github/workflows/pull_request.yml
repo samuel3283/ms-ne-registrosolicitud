@@ -1,0 +1,33 @@
+name: Pull request - Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  ACR_NAME: myacr
+  IMAGE_NAME: hello-backend
+  RESOURCE_GROUP: rg-aks-demo
+  AKS_CLUSTER: aks-demo
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+ build-deploy:
+   runs-on: ubuntu-latest
+
+   steps:
+   - name: Checkout
+     uses: actions/checkout@v4
+
+   - name: Setup Node
+     uses: actions/setup-node@v4
+     with:
+       node-version: 20
+
+   - name: Install
+     run: npm ci
+
